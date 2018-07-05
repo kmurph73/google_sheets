@@ -1,6 +1,7 @@
 module GoogleSheets
   class Spreadsheet
     attr_reader :key
+    attr_writer :sheets
 
     def initialize service, key
       @key = key
@@ -49,11 +50,6 @@ module GoogleSheets
       request_body = Google::Apis::SheetsV4::ValueRange.new(values: values)
 
       response = @service.append_spreadsheet_value(@key, range, request_body, value_input_option: 'RAW')
-    end
-
-    def self.add_and_append sheet_name, values
-      add_worksheet sheet_name
-      append_to_sheet sheet_name, values
     end
   end
 end

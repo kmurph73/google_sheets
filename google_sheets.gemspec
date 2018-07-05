@@ -9,4 +9,7 @@ Gem::Specification.new do |s|
   s.files       = ['README.md'] + Dir['lib/**/*']
   s.homepage    = 'http://rubygems.org/gems/google_sheets'
   s.license     = 'MIT'
+
+  s.add_dependency('google-api-client', ['>= 0.11.0', '< 0.22.0'])
+  s.add_development_dependency('rspec')
 end

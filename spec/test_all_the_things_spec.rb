@@ -1,12 +1,9 @@
-require 'require_all'
 require 'spec_helper'
+require 'google_sheets'
 
-require_all 'lib'
-
-YAR = false
 RSpec.describe GoogleSheets::Session do
-  describe 'self.what' do
-    it 'works' do
+  describe 'self.start_session' do
+    it 'starts session, can add & delete sheets' do
       session = GoogleSheets::Session.start_session(client_id: ENV['test_client_id'], client_secret: ENV['test_client_secret'])
 
       spreadsheet = session.spreadsheet_from_key '13kc3I2yn0jE-Fg-cAeGl3EvP7lAkxpqvZq6a7pQZJwY'
@@ -32,6 +29,9 @@ RSpec.describe GoogleSheets::Session do
       sheet.delete!
 
       expect(spreadsheet.sheets).to_not include(sheet)
+
+      # unmemoize the sheets
+      spreadsheet.sheets = nil
     end
   end
 end

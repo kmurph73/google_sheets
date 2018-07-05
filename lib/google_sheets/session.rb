@@ -5,6 +5,9 @@ require 'googleauth'
 require 'googleauth/stores/file_token_store'
 require 'fileutils'
 
+require 'google_sheets/sheet'
+require 'google_sheets/spreadsheet'
+
 module GoogleSheets
   class Session
     OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
@@ -32,14 +35,15 @@ module GoogleSheets
     def self.authorize client_id, client_secret
       credentials_path = (ENV['SHEET_ENV'] == 'test' ? 'tmp' : (Dir.exists?('config') ? 'config' : '.'))
 
-      hash = {
+      credentials_hash = {
         "installed" =>
           {
             "client_id" => client_id,
             "client_secret" => client_secret
           }
       }
-      client_id = Google::Auth::ClientId.from_hash(hash)
+      client_id = Google::Auth::ClientId.from_hash(credentials_hash)
+
       # client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
       token_store = Google::Auth::Stores::FileTokenStore.new(file: credentials_path + '/' + CREDENTIALS_FILENAME)
       authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
