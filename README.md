@@ -1,9 +1,9 @@
-[google-drive-ruby]([https://github.com/gimite/google-drive-ruby), a great gem, doesn't support Google's v4 Drive API.  As a result, I seem to encounter rate limiting errors fairly quickly.
+[google-drive-ruby](https://github.com/gimite/google-drive-ruby), a great gem, doesn't support Google's v4 Drive API.  As a result, I seem to encounter rate limiting errors fairly quickly.
 
 Since I only ever used that gem for creating/reading spreadsheets, I created this simple gem for just that, but using the v4 API.
 
 * [Installing](#installing)
-* [Gettting started](#use)
+* [Getting started](#getting-started)
 * [Github](http://github.com/shmay/google_sheets)
 
 ## <a name="installing">Installing</a>
@@ -28,7 +28,7 @@ You'll need to create a project and enable the GSheets API, as detailed [in step
 
 You'll download a `client_secret.json` that will contain a `client_id` and `client_secret`
 
-I recommend storing them in Rails 5.2's encrypted credentials.  So the final will result will look something:
+I recommend using Rails 5.2's encrypted credentials to store the id & secret.  So the final will result will look something like:
 
 ``` ruby
 client_id = Rails.application.credentials[:client_id]
@@ -40,9 +40,9 @@ session = GoogleSheets::Session.start_session(
 )
 ```
 
-Or store them in an environment variable: `ENV['client_id']`
+Or store them in an environment variable, EG: `ENV['client_id']`
 
-This will prompt you to authorize the app in the browser.  Once completed, you'll notice a `token.yaml` in your cwd.  If you'd like the file to be placed elsewhere, there's a `token_path` parameter in `start_session`, EG:
+This will prompt you to authorize the app in the browser.  Once completed, you'll notice a `token.yaml` in your cwd.  If you'd like the file to be placed elsewhere, there's a `token_path` parameter that you can pass into `start_session`, EG:
 
 ``` ruby
 session = GoogleSheets::Session.start_session(
