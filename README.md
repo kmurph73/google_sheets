@@ -83,7 +83,7 @@ spreadsheet.sheets.map &:title
 sheet.delete!
 
 spreadsheet.sheets.map &:title
-# => ['Sheet1', 'yoyo1', 'what']
+# => ['Sheet1', 'yoyo1']
 ```
 
 Or just look at [the spec](spec/test_all_the_things_spec.rb) to see it in action.
