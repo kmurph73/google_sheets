@@ -24,7 +24,7 @@ module GoogleSheets
       Spreadsheet.new @service, key
     end
 
-    ### CODE TAKEN FROM: https://developers.google.com/sheets/api/quickstart/ruby#step_3_set_up_the_sample
+    ### AUTH CODE TAKEN FROM: https://developers.google.com/sheets/api/quickstart/ruby#step_3_set_up_the_sample
     #
     ##
     # Ensure valid credentials, either by restoring from the saved credentials

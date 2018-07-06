@@ -36,6 +36,9 @@ RSpec.describe GoogleSheets::Session do
 
       # dememoize the sheets
       spreadsheet.sheets = nil
+
+      # hit the api again
+      expect(spreadsheet.sheets.map(&:title)).to eq(existing_sheet_names)
     end
   end
 end

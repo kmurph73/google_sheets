@@ -4,7 +4,7 @@ Since I only ever used that gem for creating/reading spreadsheets, I created thi
 
 * [Installing](#installing)
 * [Getting started](#getting-started)
-* [Github](http://github.com/shmay/google_sheets)
+* [GitHub](http://github.com/shmay/google_sheets)
 
 ## <a name="installing">Installing</a>
 
@@ -77,7 +77,6 @@ values = [[1,2],[3,4]]
 sheet2 = spreadsheet.add_sheet('what', values: values)
 
 spreadsheet.sheets.map &:title
-
 # => ['Sheet1', 'yoyo1', 'what']
 
 # this will delete the sheet!!!

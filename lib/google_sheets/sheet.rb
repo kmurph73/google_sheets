@@ -31,7 +31,7 @@ module GoogleSheets
 
       response = @service.batch_update_spreadsheet(@spreadsheet.key, batch_update_spreadsheet_request)
 
-      @spreadsheet.sheets.reject! {|sheet| sheet.id == self.id }
+      @spreadsheet.sheets.delete(self)
 
       self
     end
