@@ -17,12 +17,12 @@ gem 'google_sheets'
 Or install it yourself:
 
 ```
-$ gem install google_drive
+$ gem install google_sheets
 ```
 
 ### Authorization
 
-The authorization process is taken from Google's [own tutorial](https://developers.google.com/sheets/api/quickstart/ruby#step_3_set_up_the_sample).
+The authorization process is taken from Google's [own tutorial](https://developers.google.com/sheets/api/quickstart/ruby#step_3_set_up_the_sample).  Checkout [session.rb](lib/google_sheets/session.rb), it closely resembles the authorization code in that tutorial.
 
 You'll need to create a project and enable the GSheets API, as detailed [in step 1 of that tutorial](https://developers.google.com/sheets/api/quickstart/ruby#step_1_turn_on_the_api_name).
 
@@ -72,9 +72,7 @@ sheet1 = spreadsheet.sheets[0]
 sheet1.values
 # => [['first, 'last', 'age'], ['bob', 'jones', '92'], ['steve', 'johnson', '22']]
 
-values = [[1,2],[3,4]]
-
-sheet2 = spreadsheet.add_sheet('what', values: values)
+sheet2 = spreadsheet.add_sheet('what', values: [[1,2],[3,4]])
 
 spreadsheet.sheets.map &:title
 # => ['Sheet1', 'yoyo1', 'what']
@@ -89,6 +87,7 @@ spreadsheet.sheets.map &:title
 # it uses the top row as the keys
 # fyi, this will also convert the values to UTF-8
 # sometimes gsheets values come in as ASCII
+
 sheet1.to_json
 # =>
 #  [
