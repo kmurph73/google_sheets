@@ -1,14 +1,19 @@
 module GoogleSheets
   class Spreadsheet
     attr_reader :key
-    attr_writer :sheets
 
     def initialize service, key
       @key = key
       @service = service
-      @spreadsheet = service.get_spreadsheet(key)
+      load_spreadsheet
+    end
+
+    def load_spreadsheet
+      @spreadsheet = @service.get_spreadsheet(@key)
       @properties = @spreadsheet.properties.to_h
     end
+
+    alias refresh! load_spreadsheet
 
     def sheets
       @sheets ||= @spreadsheet.sheets.map do |sheet|
@@ -16,6 +21,7 @@ module GoogleSheets
       end
     end
 
+    # HT this SO answer: https://stackoverflow.com/a/49886382/548170
     def add_sheet title, values: []
       add_sheet_request = Google::Apis::SheetsV4::AddSheetRequest.new
       add_sheet_request.properties = Google::Apis::SheetsV4::SheetProperties.new

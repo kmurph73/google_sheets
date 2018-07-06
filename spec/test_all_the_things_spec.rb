@@ -16,9 +16,7 @@ RSpec.describe GoogleSheets::Session do
 
       sheet = spreadsheet.sheets[0]
 
-      values = sheet.values
-
-      expect(values).to eq([%w(one two), %w(three four)])
+      expect(sheet.values).to eq([%w(one two), %w(three four)])
 
       values = [[1,2],[3,4]]
 
@@ -28,16 +26,27 @@ RSpec.describe GoogleSheets::Session do
 
       expect(sheet.values).to eq(values)
 
-      expect(spreadsheet.sheets.map(&:title)).to eq(existing_sheet_names + [new_sheet_name])
+      new_sheet_names = existing_sheet_names + [new_sheet_name]
+
+      expect(spreadsheet.sheets.map(&:title)).to eq(new_sheet_names)
+
+      # dememoize the sheets
+      spreadsheet.refresh!
+
+      # hit the api again to ensure operation actually succeeded
+      expect(spreadsheet.sheets.map(&:title)).to eq(new_sheet_names)
+
+      sheet = spreadsheet.sheets[-1]
+
+      expect(sheet.title).to eq(new_sheet_name)
+
+      expect(sheet.values).to eq(values)
 
       sheet.delete!
 
-      expect(spreadsheet.sheets).to_not include(sheet)
+      # same deal
+      spreadsheet.refresh!
 
-      # dememoize the sheets
-      spreadsheet.sheets = nil
-
-      # hit the api again
       expect(spreadsheet.sheets.map(&:title)).to eq(existing_sheet_names)
     end
   end
