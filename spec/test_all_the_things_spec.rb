@@ -4,7 +4,11 @@ require 'google_sheets'
 RSpec.describe GoogleSheets::Session do
   describe 'self.start_session' do
     it 'starts session, can add & delete sheets' do
-      session = GoogleSheets::Session.start_session(client_id: ENV['test_client_id'], client_secret: ENV['test_client_secret'])
+      session = GoogleSheets::Session.start_session(
+        client_id: ENV['test_client_id'],
+        client_secret: ENV['test_client_secret'],
+        token_path: './tmp'
+      )
 
       spreadsheet = session.spreadsheet_from_key '13kc3I2yn0jE-Fg-cAeGl3EvP7lAkxpqvZq6a7pQZJwY'
 
@@ -30,7 +34,7 @@ RSpec.describe GoogleSheets::Session do
 
       expect(spreadsheet.sheets).to_not include(sheet)
 
-      # unmemoize the sheets
+      # dememoize the sheets
       spreadsheet.sheets = nil
     end
   end

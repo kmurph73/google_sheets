@@ -32,9 +32,7 @@ module GoogleSheets
     # the user's default browser will be launched to approve the request.
     #
     # @return [Google::Auth::UserRefreshCredentials] OAuth2 credentials
-    def self.authorize client_id, client_secret
-      credentials_path = (ENV['SHEET_ENV'] == 'test' ? 'tmp' : (Dir.exists?('config') ? 'config' : '.'))
-
+    def self.authorize client_id, client_secret, token_path
       credentials_hash = {
         "installed" =>
           {
@@ -42,10 +40,11 @@ module GoogleSheets
             "client_secret" => client_secret
           }
       }
+
       client_id = Google::Auth::ClientId.from_hash(credentials_hash)
 
       # client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
-      token_store = Google::Auth::Stores::FileTokenStore.new(file: credentials_path + '/' + CREDENTIALS_FILENAME)
+      token_store = Google::Auth::Stores::FileTokenStore.new(file: token_path + '/' + CREDENTIALS_FILENAME)
       authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
       user_id = 'default'
       credentials = authorizer.get_credentials(user_id)
@@ -64,11 +63,11 @@ module GoogleSheets
       credentials
     end
 
-    def self.start_session client_id:, client_secret:
+    def self.start_session client_id:, client_secret:, token_path: '.'
       # Initialize the API
       service = Google::Apis::SheetsV4::SheetsService.new
       # service.client_options.application_name = APPLICATION_NAME
-      service.authorization = authorize(client_id, client_secret)
+      service.authorization = authorize(client_id, client_secret, token_path)
 
       Session.new(service)
     end
