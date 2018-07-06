@@ -70,7 +70,7 @@ spreadsheet.sheets.map &:title
 sheet1 = spreadsheet.sheets[0]
 
 sheet1.values
-# => [['one','two'], ['three', 'four']
+# => [['first, 'last', 'age'], ['bob', 'jones', '92'], ['steve', 'johnson', '22']]
 
 values = [[1,2],[3,4]]
 
@@ -80,10 +80,29 @@ spreadsheet.sheets.map &:title
 # => ['Sheet1', 'yoyo1', 'what']
 
 # this will delete the sheet!!!
-sheet.delete!
+sheet2.delete!
 
 spreadsheet.sheets.map &:title
 # => ['Sheet1', 'yoyo1']
+
+# Sheet#to_json converts the csv to a json array
+# it uses the top row as the keys
+# fyi, this will also convert the values to UTF-8
+# sometimes gsheets values come in as ASCII
+sheet1.to_json
+# =>
+#  [
+#     {
+#       first: 'bob',
+#       last: 'jones',
+#       age: '92'
+#     },
+#     {
+#       first: 'steve',
+#       last: 'johnson',
+#       age: '22'
+#     }
+#  ]
 ```
 
 Or just look at [the spec](spec/test_all_the_things_spec.rb) to see it in action.

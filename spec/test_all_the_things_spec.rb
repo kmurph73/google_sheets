@@ -16,7 +16,11 @@ RSpec.describe GoogleSheets::Session do
 
       sheet = spreadsheet.sheets[0]
 
-      expect(sheet.values).to eq([%w(one two), %w(three four)])
+      sheet1_values = [
+        %w(first last age), %w(bob jones 92), %w(steve johnson 22)
+      ]
+
+      expect(sheet.values).to eq(sheet1_values)
 
       values = [[1,2],[3,4]]
 
@@ -48,6 +52,23 @@ RSpec.describe GoogleSheets::Session do
       spreadsheet.refresh!
 
       expect(spreadsheet.sheets.map(&:title)).to eq(existing_sheet_names)
+
+      sheet1 = spreadsheet.sheets[0]
+
+      sheet1_json = [
+        {
+          first: 'bob',
+          last: 'jones',
+          age: '92'
+        },
+        {
+          first: 'steve',
+          last: 'johnson',
+          age: '22'
+        }
+      ]
+
+      expect(sheet1.to_json).to eq(sheet1_json)
     end
   end
 end

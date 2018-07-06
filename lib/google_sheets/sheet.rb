@@ -35,5 +35,33 @@ module GoogleSheets
 
       self
     end
+
+    def to_json
+      top_row = values[0].map &:to_sym
+      hashify_data(values[1..-1], top_row)
+    end
+
+    private
+
+    def hashify_data csv, top_row
+      csv.map do |arr|
+        hash = {}
+
+        top_row.each_with_index do |attr, index|
+          hash[attr.to_sym] = utf8ify(arr[index])
+        end
+
+        hash
+      end
+    end
+
+    def utf8ify val
+      if val.class == String && val.encoding.to_s != 'UTF-8'
+        val = val.dup.force_encoding('utf-8')
+      end
+
+      val
+    end
+
   end
 end
