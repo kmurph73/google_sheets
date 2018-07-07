@@ -97,7 +97,7 @@ module GoogleSheets
         hash = {}
 
         top_row.each_with_index do |attr, index|
-          hash[attr.to_sym] = utf8ify(arr[index])
+          hash[attr.to_sym] = arr[index] # utf8ify(arr[index])
         end
 
         hash

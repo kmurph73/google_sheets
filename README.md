@@ -88,8 +88,6 @@ spreadsheet.sheets.map &:title
 
 # Sheet#to_json converts the csv to a json array
 # it uses the top row as the keys
-# fyi, this will also convert the values to UTF-8
-# sometimes gsheets values come in as ASCII
 sheet1_json = sheet1.to_json
 # =>
 #  [
