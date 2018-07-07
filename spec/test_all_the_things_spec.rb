@@ -69,6 +69,26 @@ RSpec.describe GoogleSheets::Session do
       ]
 
       expect(sheet1.to_json).to eq(sheet1_json)
+
+      sheet1_json[0][:first] = 'bobby'
+
+      sheet1.set_values_from_json sheet1_json
+
+      expect(sheet1.values[1][0]).to eq('bobby')
+
+      sheet1.save!
+
+      spreadsheet.refresh!
+
+      expected = [
+        %w(first last age), %w(bobby jones 92), %w(steve johnson 22)
+      ]
+
+      expect(spreadsheet.sheets[0].values).to eq(expected)
+
+      sheet1.values[1][0] = 'bob'
+
+      sheet1.save!
     end
   end
 end

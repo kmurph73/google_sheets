@@ -58,6 +58,27 @@ module GoogleSheets
       hashify_data(values[1..-1], top_row)
     end
 
+    def set_values_from_json json
+      top_row = json.map(&:keys).flatten.uniq
+
+      csv = json.map do |hash|
+        top_row.map {|c| hash[c] }
+      end
+
+      csv.unshift top_row.map &:to_s
+
+      self.values = csv
+    end
+
+    def save!
+      value_range_object = {
+        majorDimension: "ROWS",
+        values: values
+      }
+
+      @service.update_spreadsheet_value(@spreadsheet.key, @title, value_range_object, value_input_option: 'RAW')
+    end
+
     private
 
     def hashify_data csv, top_row
