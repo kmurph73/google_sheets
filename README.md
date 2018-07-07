@@ -1,3 +1,5 @@
+[![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/shmay/google_sheets/)
+
 [google-drive-ruby](https://github.com/gimite/google-drive-ruby), a great gem, doesn't support Google's v4 Drive API.  As a result, I seem to encounter rate limiting errors fairly quickly.
 
 Since I only ever used that gem for creating/reading spreadsheets, I created this simple gem for just that, but using the v4 API.
@@ -86,10 +88,7 @@ spreadsheet.sheets.map &:title
 
 # Sheet#to_json converts the csv to a json array
 # it uses the top row as the keys
-# fyi, this will also convert the values to UTF-8
-# sometimes gsheets values come in as ASCII
-
-sheet1.to_json
+sheet1_json = sheet1.to_json
 # =>
 #  [
 #     {
@@ -104,6 +103,13 @@ sheet1.to_json
 #     }
 #  ]
 
+sheet1_json[0][:first] = 'bobby'
+
+sheet1.set_values_from_json sheet1_json
+
+expect(sheet1.values[1][0]).to eq('bobby')
+
+sheet1.save!
 ```
 
 Or just look at [the spec](spec/test_all_the_things_spec.rb) to see it in action.

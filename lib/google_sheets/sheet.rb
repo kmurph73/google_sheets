@@ -58,6 +58,38 @@ module GoogleSheets
       hashify_data(values[1..-1], top_row)
     end
 
+    # Converts an array of hashes back to csv format.
+    #   So the opposite of to_json
+    #
+    # EG:
+    # ```
+    # sheet.set_values_from_json([{name: 'john', age: '20'}])
+    # sheet.values # => [['name', 'age'], ['john', '20']]
+    # ```
+    #
+    # @return Array(Array)
+    def set_values_from_json json
+      top_row = json.map(&:keys).flatten.uniq
+
+      csv = json.map do |hash|
+        top_row.map {|c| hash[c] }
+      end
+
+      csv.unshift top_row.map &:to_s
+
+      self.values = csv
+    end
+
+    # Save the current `values` to the spreadsheet
+    def save!
+      value_range_object = {
+        majorDimension: 'ROWS',
+        values: values
+      }
+
+      @service.update_spreadsheet_value(@spreadsheet.key, @title, value_range_object, value_input_option: 'RAW')
+    end
+
     private
 
     def hashify_data csv, top_row
@@ -65,7 +97,7 @@ module GoogleSheets
         hash = {}
 
         top_row.each_with_index do |attr, index|
-          hash[attr.to_sym] = utf8ify(arr[index])
+          hash[attr.to_sym] = arr[index] # utf8ify(arr[index])
         end
 
         hash
