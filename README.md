@@ -57,7 +57,7 @@ session = GoogleSheets::Session.start_session(
 
 <h3 id='getting-started'>Getting Started</h3>
 
-Once you're authorized, you can read, create, and delete sheets within a spreadsheet.
+Once you're authorized, you can create, read, update and delete sheets within a spreadsheet.
 
 ``` ruby
 session = GoogleSheets::Session.start_session(
