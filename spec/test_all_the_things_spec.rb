@@ -80,15 +80,21 @@ RSpec.describe GoogleSheets::Session do
 
       spreadsheet.refresh!
 
-      expected = [
+      sheet1 = spreadsheet.sheets[0]
+
+      expected_values = [
         %w(first last age), %w(bobby jones 92), %w(steve johnson 22)
       ]
 
-      expect(spreadsheet.sheets[0].values).to eq(expected)
+      expect(sheet1.values).to eq(expected_values)
 
       sheet1.values[1][0] = 'bob'
 
       sheet1.save!
+
+      spreadsheet.refresh!
+
+      expect(spreadsheet.sheets[0].values[1][0]).to eq('bob')
     end
   end
 end
