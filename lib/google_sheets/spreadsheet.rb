@@ -1,5 +1,9 @@
+# frozen_string_literal
+
 module GoogleSheets
   class Spreadsheet
+    # the spreadsheet key
+    # @return [String]
     attr_reader :key
 
     def initialize service, key
@@ -8,13 +12,16 @@ module GoogleSheets
       load_spreadsheet
     end
 
+    # loads the spreadsheet from google sheets
     def load_spreadsheet
       @spreadsheet = @service.get_spreadsheet(@key)
       @properties = @spreadsheet.properties.to_h
     end
 
+    # reloads the spreadsheet, effectively uncaching everything
     alias refresh! load_spreadsheet
 
+    # @return [Array(Sheet)]
     def sheets
       @sheets ||= @spreadsheet.sheets.map do |sheet|
         Sheet.new(@service, sheet, self)
@@ -22,6 +29,7 @@ module GoogleSheets
     end
 
     # HT this SO answer: https://stackoverflow.com/a/49886382/548170
+    # @return [Sheet]
     def add_sheet title, values: []
       add_sheet_request = Google::Apis::SheetsV4::AddSheetRequest.new
       add_sheet_request.properties = Google::Apis::SheetsV4::SheetProperties.new
@@ -47,6 +55,8 @@ module GoogleSheets
 
       sheet
     end
+
+    private
 
     def append_to_sheet title, values
       # The A1 notation of a range to search for a logical table of data.

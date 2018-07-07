@@ -1,6 +1,13 @@
+# frozen_string_literal
+
 module GoogleSheets
   class Sheet
-    attr_reader :properties, :title
+    # [Google::Apis::SheetsV4::SheetProperties](https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/SheetsV4/SheetProperties) in hash form
+    # @return [Hash]
+    attr_reader :properties
+    # title of the sheet
+    # @return [String]
+    attr_reader :title
     attr_writer :values
 
     def initialize service, sheet, spreadsheet
@@ -11,14 +18,20 @@ module GoogleSheets
       @title = @properties[:title]
     end
 
+    # The internal ID of the sheet. From Google.
+    # @return [Integer]
     def id
       @properties[:sheet_id]
     end
 
+    # Returns an Array of string values, EG: [['one', 'two'], ['three', 'four']]
+    # @return [Array(String)]
     def values
       @values ||= @service.get_spreadsheet_values(@spreadsheet.key, @title).values
     end
 
+    # Deletes a sheet from a spreadsheet
+    # @return [Sheet]
     def delete!
       delete_sheet_request = Google::Apis::SheetsV4::DeleteSheetRequest.new
       delete_sheet_request.sheet_id = self.id
@@ -36,6 +49,10 @@ module GoogleSheets
       self
     end
 
+    # Converts the spreadsheet to an array of hashes, using the top row as the keys
+    #
+    # EG `[['name', 'age'], ['john', '20']] => [{name: 'john', age: '20'}]`
+    # @return [Array(Hash)]
     def to_json
       top_row = values[0].map &:to_sym
       hashify_data(values[1..-1], top_row)

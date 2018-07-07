@@ -2,11 +2,11 @@
 
 Since I only ever used that gem for creating/reading spreadsheets, I created this simple gem for just that, but using the v4 API.
 
-* [Installing](#installing)
+* [Installing](#Installing)
 * [Getting started](#getting-started)
 * [GitHub](http://github.com/shmay/google_sheets)
 
-## <a name="installing">Installing</a>
+<h3 id='installing'>Installing</h3>
 
 Add this line to your application's Gemfile & `bundle install`:
 
@@ -20,9 +20,9 @@ Or install it yourself:
 $ gem install google_sheets
 ```
 
-### Authorization
+<h3 id='authorization'>Authorization</h3>
 
-The authorization process is taken from Google's [own tutorial](https://developers.google.com/sheets/api/quickstart/ruby#step_3_set_up_the_sample).  Checkout [session.rb](lib/google_sheets/session.rb), it closely resembles the authorization code in that tutorial.
+The authorization process is taken from Google's [own tutorial](https://developers.google.com/sheets/api/quickstart/ruby#step_3_set_up_the_sample).  Take a look at [session.rb](lib/google_sheets/session.rb) - it closely resembles the authorization code in that tutorial.
 
 You'll need to create a project and enable the GSheets API, as detailed [in step 1 of that tutorial](https://developers.google.com/sheets/api/quickstart/ruby#step_1_turn_on_the_api_name).
 
@@ -52,7 +52,7 @@ session = GoogleSheets::Session.start_session(
 )
 ```
 
-### Getting Started
+<h3 id='getting-started'>Getting Started</h3>
 
 Once you're authorized, you can read, create, and delete sheets within a spreadsheet.
 
@@ -102,6 +102,7 @@ sheet1.to_json
 #       age: '22'
 #     }
 #  ]
+
 ```
 
 Or just look at [the spec](spec/test_all_the_things_spec.rb) to see it in action.
