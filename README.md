@@ -105,10 +105,17 @@ sheet1_json = sheet1.to_json
 
 sheet1_json[0][:first] = 'bobby'
 
+# Sheet#set_values_from_json is the inverse of to_json
+# accepts an array of hashes, turns it back to csv format
+# sets that as the sheet's values
 sheet1.set_values_from_json sheet1_json
+# json = [{first: 'bob',last: 'jones'}]
+# sheet.set_values_from_json json
+# sheet.values # => [['first', 'last'], ['bob', 'jones']]
 
 expect(sheet1.values[1][0]).to eq('bobby')
 
+# save the spreadsheet's values
 sheet1.save!
 ```
 
