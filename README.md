@@ -2,9 +2,10 @@
 
 Since I only ever used that gem for creating/reading spreadsheets, I created this simple gem for just that, but using the v4 API.
 
-* [Installing](#Installing)
+* [Installing](#installing)
 * [Getting started](#getting-started)
 * [GitHub](http://github.com/shmay/google_sheets)
+* [API docs](https://www.rubydoc.info/github/shmay/google_sheets/master)
 
 <h3 id='installing'>Installing</h3>
 
