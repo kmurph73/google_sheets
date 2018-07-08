@@ -22,7 +22,7 @@ RSpec.describe GoogleSheets::Session do
 
       expect(sheet.values).to eq(sheet1_values)
 
-      values = [[1,2],[3,4]]
+      values = [['1','2'],['3','4']]
 
       new_sheet_name = 'yoyo10'
 

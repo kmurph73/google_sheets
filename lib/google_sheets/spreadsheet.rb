@@ -14,6 +14,7 @@ module GoogleSheets
 
     # loads the spreadsheet from google sheets
     def load_spreadsheet
+      @sheets = nil
       @spreadsheet = @service.get_spreadsheet(@key)
       @properties = @spreadsheet.properties.to_h
     end
