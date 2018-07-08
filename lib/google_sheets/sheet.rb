@@ -69,15 +69,7 @@ module GoogleSheets
     #
     # @return Array(Array)
     def set_values_from_json json
-      top_row = json.map(&:keys).flatten.uniq
-
-      csv = json.map do |hash|
-        top_row.map {|c| hash[c] }
-      end
-
-      csv.unshift top_row.map &:to_s
-
-      self.values = csv
+      self.values = Sheet.json_to_csv(json)
     end
 
     # Save the current `values` to the spreadsheet
@@ -88,6 +80,21 @@ module GoogleSheets
       }
 
       @service.update_spreadsheet_value(@spreadsheet.key, @title, value_range_object, value_input_option: 'RAW')
+    end
+
+    # Helper method for converting an array of hashes to csv-style values
+    # @param an array of hashes to be converted to csv-style nested array format
+    # @return [Array(Array)] csv style nested array
+    def self.json_to_csv json
+      top_row = json.map(&:keys).flatten.uniq
+
+      csv = json.map do |hash|
+        top_row.map {|c| hash[c] }
+      end
+
+      csv.unshift top_row.map &:to_s
+
+      csv
     end
 
     private
