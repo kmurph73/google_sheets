@@ -4,6 +4,8 @@
 
 Since I only ever used that gem for creating/reading spreadsheets, I created this simple gem for just that, but using the v4 API.
 
+**If you'd like changes or a new feature, please create an issue or PR** - features will be developed on an as-needed basis.
+
 * [Installing](#installing)
 * [Getting started](#getting-started)
 * [GitHub](http://github.com/shmay/google_sheets)
