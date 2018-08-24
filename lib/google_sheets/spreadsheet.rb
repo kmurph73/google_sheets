@@ -57,6 +57,14 @@ module GoogleSheets
       sheet
     end
 
+    # Returns a GoogleDrive::Worksheet with the given title in the spreadsheet.
+    #
+    # Returns nil if not found. Returns the first one when multiple worksheets
+    # with the title are found.
+    def sheet_by_title(title)
+      sheets.find { |ws| ws.title == title }
+    end
+
     private
 
     def append_to_sheet title, values

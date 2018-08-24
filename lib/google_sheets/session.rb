@@ -7,6 +7,7 @@ require 'fileutils'
 
 require 'google_sheets/sheet'
 require 'google_sheets/spreadsheet'
+require 'google_sheets/config'
 
 module GoogleSheets
   class Session
@@ -77,6 +78,29 @@ module GoogleSheets
       # service.client_options.application_name = APPLICATION_NAME
       service.authorization = authorize(client_id, client_secret, token_path)
 
+      Session.new(service)
+    end
+    # Returns GoogleDrive::Session constructed from a config JSON file at
+    # +config+.
+    #
+    # +config+ is the path to the config file.
+    #
+    # This will prompt the credential via command line for the first time and
+    # save it to +config+ for later usages.
+    #
+    # See
+    # https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md
+    # for a usage example.
+    #
+    def self.from_config(config)
+      if config.is_a?(String)
+        config_path = config
+        config = Config.new(config_path)
+      end
+      # Initialize the API
+      service = Google::Apis::SheetsV4::SheetsService.new
+      # service.client_options.application_name = APPLICATION_NAME
+      service.authorization = authorize(config.client_id, config.client_secret, '.')
       Session.new(service)
     end
 
