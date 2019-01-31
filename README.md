@@ -1,8 +1,6 @@
 [![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/kmurph73/google_sheets/)
 
-[google-drive-ruby](https://github.com/gimite/google-drive-ruby), a great gem, doesn't support Google's v4 Drive API.  As a result, I seem to encounter rate limiting errors fairly quickly.
-
-Since I only ever used that gem for creating/reading spreadsheets, I created this simple gem for just that, but using the v4 API.
+A simple gem for interacting with GSheets using its v4 API.  Originally created due to [google-drive-ruby](https://github.com/gimite/google-drive-ruby) lacking v4 support, which gimite has [since fixed](https://github.com/gimite/google-drive-ruby/issues/214).
 
 **If you'd like changes or a new feature, please create an issue or PR** - features will be developed on an as-needed basis.
 * [Installing](#installing)
