@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'google_sheets'
 
 RSpec.describe GoogleSheets::Session do
+
   describe 'self.start_session' do
     it 'starts session, can add & delete sheets' do
       session = GoogleSheets::Session.start_session(
@@ -88,13 +89,25 @@ RSpec.describe GoogleSheets::Session do
 
       expect(sheet1.values).to eq(expected_values)
 
-      sheet1.values[1][0] = 'bob'
+      sheet1.values[1][0] = 'bob '
 
       sheet1.save!
 
       spreadsheet.refresh!
 
+      expect(spreadsheet.sheets[0].values[1][0]).to eq('bob ')
+
+      GoogleSheets.strip_all_cells = true
+
+      spreadsheet.refresh!
+
       expect(spreadsheet.sheets[0].values[1][0]).to eq('bob')
+
+      sheet1 = spreadsheet.sheets[0]
+
+      sheet1.values[1][0] = 'bob'
+
+      sheet1.save!
     end
   end
 end
