@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'google_sheets'
-  s.version     = '0.0.7'
+  s.version     = '0.0.8'
   s.date        = '2018-07-03'
   s.summary     = "Basic Google Sheets interaction, using the v4 api."
   s.description = "CRUD Google Sheets in Ruby"

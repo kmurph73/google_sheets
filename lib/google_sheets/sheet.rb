@@ -27,7 +27,15 @@ module GoogleSheets
     # Returns an Array of string values, EG: [['one', 'two'], ['three', 'four']]
     # @return [Array(String)]
     def values
-      @values ||= @service.get_spreadsheet_values(@spreadsheet.key, @title).values
+      @values ||= begin
+        vals = @service.get_spreadsheet_values(@spreadsheet.key, @title).values
+
+        if GoogleSheets.strip_all_cells
+          vals.flatten.each &:strip!
+        end
+
+        vals
+      end
     end
 
     # Deletes a sheet from a spreadsheet
