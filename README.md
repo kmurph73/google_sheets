@@ -117,7 +117,7 @@ sheet1.save!
 
 Or just look at [the spec](spec/test_all_the_things_spec.rb) to see it in action.
 
-UPDATE 5-19-2019:
+**UPDATE 5-19-2019:**
 
 ``` ruby
 GoogleSheets.strip_all_cells
@@ -125,7 +125,7 @@ GoogleSheets.strip_all_cells
 
 is now a thing - it will `#strip` all of the cells returned from the sheet if set to true.
 
-You can set it in an initializer, eg in `config/initializers/google_sheets.rb`
+You can set it in an initializer, eg in `config/initializers/google_sheets.rb`:
 
 ``` ruby
 GoogleSheets.strip_all_cells = true
