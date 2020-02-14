@@ -1,3 +1,5 @@
+# frozen_string_literal
+
 require 'google_sheets/session'
 
 module GoogleSheets

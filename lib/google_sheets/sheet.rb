@@ -2,7 +2,7 @@
 
 module GoogleSheets
   class Sheet
-    # [Google::Apis::SheetsV4::SheetProperties](https://www.rubydoc.info/github/google/google-api-ruby-client/Google/Apis/SheetsV4/SheetProperties) in hash form
+    # [Google::Apis::SheetsV4::SheetProperties](https://github.com/googleapis/google-api-ruby-client/blob/master/generated/google/apis/sheets_v4/classes.rb#L8756) in hash form
     # @return [Hash]
     attr_reader :properties
     # title of the sheet
@@ -75,7 +75,7 @@ module GoogleSheets
     # sheet.values # => [['name', 'age'], ['john', '20']]
     # ```
     #
-    # @return Array(Array)
+    # @return [Array(Array)]
     def set_values_from_json json
       self.values = Sheet.json_to_csv(json)
     end
@@ -91,7 +91,7 @@ module GoogleSheets
     end
 
     # Helper method for converting an array of hashes to csv-style values
-    # @param an array of hashes to be converted to csv-style nested array format
+    # @param json [Array(Hash)] an array of hashes to be converted to csv-style nested array format
     # @return [Array(Array)] csv style nested array
     def self.json_to_csv json
       top_row = json.map(&:keys).flatten.uniq
